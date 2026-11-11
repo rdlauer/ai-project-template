@@ -6,6 +6,8 @@
 
 Kit: {{Blues kit name, or "none"}}
 
+<!-- Generator: a kit answers much of this file. Look up its contents and fill the rows it covers instead of asking, and confirm the SKU printed on the Notecard. The kit's Notecarrier and host also settle some of the Wiring and Host firmware updates answers, so look those up before asking too. -->
+
 | Role | Part | Part number / SKU | Datasheet |
 | --- | --- | --- | --- |
 | Notecard | {{e.g. Notecard Cell+WiFi}} | `{{e.g. NOTE-MBGLW}}` | {{LINK}} |

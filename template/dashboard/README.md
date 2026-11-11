@@ -17,7 +17,7 @@ Copy [`.env.example`](./.env.example) to `.env` (or the file your framework expe
 | `NOTEHUB_PROJECT_UID` | Yes | Notehub project UID (`app:...`). |
 | `NOTEHUB_PERSONAL_ACCESS_TOKEN` | Yes | Notehub personal access token, limited to this project. Server-side only: never expose it to the browser. |
 
-To create the token, open the user menu in [Notehub](https://notehub.io), choose **API Access**, and click **Create New Token**. Set the scope to **Viewer Privileges in One Project** and pick this project. If the dashboard changes things in Notehub, such as environment variables, use **My Privileges in One Project** instead. Don't give a dashboard a token that can reach all of your projects.
+To create the token, open the user menu in [Notehub](https://notehub.io), choose **API Access**, and click **Create New Token**. Set the scope to **My Privileges in One Project** and pick this project, so the dashboard can do anything you can do in this project, such as changing environment variables or updating firmware. Don't give a dashboard a token that can reach all of your projects.
 
 ## Run locally
 

@@ -48,6 +48,6 @@ Cross-reference the two. For example, when debugging "device X stopped reporting
 ## Dashboard
 
 - Call the Notehub API from server-side code only. Never expose `NOTEHUB_PERSONAL_ACCESS_TOKEN` to the browser.
-- The token is scoped to this one project (see `dashboard/README.md`). If a feature needs more access than the token has, tell the user. Never suggest a token that reaches all of their projects.
+- The token carries the user's privileges in this one project only (see `dashboard/README.md`). Never suggest a token that reaches all of their projects.
 - Use the Notefile names, fields, and units in `docs/data.md`.
 - Dashboard secrets and settings live in `dashboard/.env` (never committed). Add new variables to both `dashboard/.env.example` and the table in `dashboard/README.md`.
