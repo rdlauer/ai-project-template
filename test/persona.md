@@ -5,6 +5,7 @@
 ## The user
 
 - **Project:** Greenhouse Monitor. Reports temperature and humidity from a small hobby greenhouse so the owner can tell when it's too hot or too cold.
+- **Built by:** Sam, as a personal project. Use "Sam" as both the organization and the builder.
 - **Deployment:** one prototype, indoors in the greenhouse, fixed in place.
 - **Kit:** Blues Feather Kit for Cell+WiFi. The Notecard is labeled `NOTE-MBGLW`, and the Notecarrier is a Notecarrier F v1.5.
 - **Components:** Adafruit BME280 breakout (Adafruit product 2652) on the Notecarrier's Qwiic port, I2C address `0x77`.

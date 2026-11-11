@@ -5,8 +5,18 @@ set -u
 require_firmware=0
 if [ "${1:-}" = "--require-firmware" ]; then require_firmware=1; shift; fi
 dir=${1:?usage: test/check.sh [--require-firmware] <generated-project-dir>}
+here=$(cd "$(dirname "$0")" && pwd)
 failures=0
 fail() { echo "FAIL: $*"; failures=$((failures + 1)); }
+
+# Runs a helper that prints one problem per line. A helper that crashes fails the check too.
+check_with() {
+  local output status
+  output=$(python3 -I "$here/$1" "$dir")
+  status=$?
+  while IFS= read -r line; do [ -n "$line" ] && fail "$line"; done <<<"$output"
+  [ "$status" -eq 0 ] || fail "$1 exited with status $status (see above)"
+}
 
 for f in README.md AGENTS.md CLAUDE.md .gitignore .mcp.json .cursor/mcp.json .vscode/mcp.json \
   docs/product.md docs/hardware.md docs/data.md docs/configuration.md \
@@ -24,18 +34,13 @@ for entry in "$dir"/* "$dir"/.[!.]*; do
   esac
 done
 
-for f in .mcp.json .cursor/mcp.json .vscode/mcp.json; do
-  python3 -c 'import json, sys; json.load(open(sys.argv[1]))' "$dir/$f" 2>/dev/null || fail "$f isn't valid JSON"
-done
+check_with check_mcp.py
 
 md_grep() { grep -rnF --include='*.md' --exclude-dir=.git --exclude-dir=node_modules "$1" "$dir"; }
 md_grep '{{' && fail "placeholders left in Markdown (above)"
 md_grep '<!-- Generator' && fail "generator comments left in Markdown (above)"
 
-if [ -f "$dir/SETUP.md" ]; then
-  grep -qF '<commit>' "$dir/SETUP.md" && fail "SETUP.md doesn't name the generator commit"
-  grep -qE '[0-9a-f]{40}|GENERATOR\.md' "$dir/SETUP.md" || fail "SETUP.md doesn't link the generator"
-fi
+check_with check_setup.py
 
 sketch=$(find "$dir/firmware" -name '*.ino' -not -path '*/build/*' 2>/dev/null | head -1)
 fqbn=$(grep -oE '[A-Za-z0-9_-]+:[A-Za-z0-9_-]+:[A-Za-z0-9_-]+(:[A-Za-z0-9_=,-]+)?' "$dir/firmware/README.md" 2>/dev/null | head -1)
