@@ -35,7 +35,7 @@ Kit: {{Blues kit name, or "none"}}
 ## Host firmware updates
 
 - **Method:** {{Notecard Outboard Firmware Update / IAP / none}}
-- **Wiring:** {{e.g. "pre-wired on Notecarrier F v1.5" or "host BOOT0, NRST, and USART1 wired to the Notecard's ALT_DFU pins"; N/A for IAP or none}}
+- **Wiring:** {{e.g. "pre-wired on the Notecarrier", or which host pins connect to which Notecard pins; N/A if the method needs no wiring}}
 
 The firmware enables this at startup (see [configuration](./configuration.md)) and reports its version to Notehub on every boot.
 

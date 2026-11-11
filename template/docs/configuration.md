@@ -16,14 +16,14 @@ The firmware sends these settings to the Notecard at startup, so flashing the ho
 | Inbound interval | {{default: 1440}} min | `hub.set` `inbound` |
 | Voltage mode | `{{e.g. lipo}}` | `card.voltage` `mode` |
 | Location mode | `{{default: off}}` | `card.location.mode` `mode` |
-| Location tracking | {{off / on, writing _track.qo (requires periodic location mode)}} | `card.location.track` |
+| Location tracking | {{off / on, writing _track.qo}} | `card.location.track` |
 | Note templates | {{e.g. "sensors.qo"}} | `note.template` |
-| Outboard Firmware Update | {{e.g. "stm32", mode altdfu}} | `card.dfu` |
+| Outboard Firmware Update | {{the card.dfu arguments for this carrier}} | `card.dfu` |
 | Host firmware version | Reported on every boot from the version in the firmware source | `hub.set` `version` |
 
 ## 2. Notehub environment variables
 
-Runtime settings that the firmware reads with [`env.get`](https://dev.blues.io/api-reference/notecard-api/env-requests/latest/#env-get). Change them in Notehub at the project, fleet, or device level without reflashing. Device values override fleet values, which override project values. The firmware falls back to the defaults below when a variable isn't set. See [Understanding Environment Variables](https://dev.blues.io/guides-and-tutorials/notecard-guides/understanding-environment-variables/).
+Runtime settings that the firmware reads with [`env.get`](https://dev.blues.io/api-reference/notecard-api/env-requests/latest/#env-get). Change them in Notehub at the project, fleet, or device level without reflashing. The firmware falls back to the defaults below when a variable isn't set. See [Understanding Environment Variables](https://dev.blues.io/guides-and-tutorials/notecard-guides/understanding-environment-variables/).
 
 <!-- Generator: suggest a variable for anything the user may want to tune after deployment. -->
 
