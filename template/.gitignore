@@ -1,0 +1,33 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+
+# Keep the shared MCP config, ignore other VS Code state
+.vscode/*
+!.vscode/mcp.json
+!.vscode/extensions.json
+
+# Firmware build output
+.pio/
+build/
+*.elf
+*.hex
+*.bin
+
+# Dashboard
+node_modules/
+.next/
+dist/
+.netlify/
+.vercel/
+
+# Python
+__pycache__/
+.venv/

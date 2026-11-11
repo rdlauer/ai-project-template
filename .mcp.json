@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "blues-expert": {
+      "type": "http",
+      "url": "https://mcp.blues.io/expert/mcp"
+    },
+    "notehub": {
+      "type": "http",
+      "url": "https://mcp.notehub.io/mcp"
+    }
+  }
+}
