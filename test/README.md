@@ -8,6 +8,6 @@ test/run.sh /tmp/greenhouse  # or into a folder you choose
 test/check.sh <project-dir>  # check any generated project
 ```
 
-`check.sh` fails on missing files, invalid MCP config, leftover `{{` placeholders or `<!-- Generator` comments, a `SETUP.md` that doesn't point back to the generator, and Arduino firmware that doesn't build. It doesn't call `api_validate`, so read the run's log (`<project-dir>.log`) to confirm the agent validated its Notecard requests.
+`check.sh` fails on missing files, unexpected files at the project root, invalid MCP config, leftover `{{` placeholders or `<!-- Generator` comments, a `SETUP.md` that doesn't point back to the generator, and Arduino firmware that doesn't build. With `--require-firmware`, which `run.sh` passes because the persona asks for firmware, it also fails when there's no sketch or no `arduino-cli` to build it. It doesn't call `api_validate`, so read the run's log (`<project-dir>.log`) to confirm the agent validated its Notecard requests.
 
 Requirements: [Claude Code](https://claude.com/claude-code) and, to build the firmware, `arduino-cli` with the STM32 core. A run takes several minutes and uses Claude Code with permission checks off, so the agent can install Arduino libraries without asking.

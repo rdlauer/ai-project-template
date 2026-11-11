@@ -67,10 +67,10 @@ Work through these topics in order. Record answers as you go: fill in the matchi
 | Notecarrier | Model and version, or custom carrier. | `docs/hardware.md` |
 | Host | Host MCU or SBC. Skip if the Notecarrier has a built-in host (e.g. Notecarrier CX). | `docs/hardware.md` |
 | Components | Every sensor, actuator, display, battery, antenna, and enclosure, with part numbers and datasheet links. Offer to save datasheets to `docs/datasheets/`. | `docs/hardware.md` |
-| Firmware updates | How host firmware gets updated in the field: Notecard Outboard Firmware Update, IAP, or none. Ask before Wiring, because Outboard Firmware Update needs the host's `BOOT`, `RESET`, and UART lines wired to the Notecard. | `docs/hardware.md`, `docs/configuration.md` |
+| Firmware updates | How host firmware gets updated in the field: Notecard Outboard Firmware Update, IAP, or none. Ask before Wiring, because Outboard Firmware Update needs the host's `BOOT`, `RESET`, and UART lines wired to the Notecard. Notecard for LoRa supports neither method, so record "none" for it and move on. | `docs/hardware.md`, `docs/configuration.md` |
 | Wiring | Notecard ↔ host interface (I2C default, or serial); ATTN/AUX pin usage; Outboard Firmware Update lines, if used; one row per component connection (pin → pin, bus, address, voltage). | `docs/hardware.md` |
 | Power | Power source; `card.voltage` mode; sleep strategy; battery-life target. | `docs/hardware.md`, `docs/configuration.md` |
-| Location | Whether the device needs its location, and how often (`card.location.mode`); whether to record a track. | `docs/configuration.md`, `docs/data.md` |
+| Location | Whether the device needs its location, and how often (`card.location.mode`); whether to record a track, which requires `periodic` mode. | `docs/configuration.md`, `docs/data.md` |
 | Firmware | Platform and build tool (default: Arduino + Arduino CLI); board identifier (FQBN / PlatformIO env); what the firmware should do; starting version (default: 1.0.0). | `firmware/README.md` |
 | Notehub & data | Notehub project name and ProductUID (or "not created yet"); sync mode and cadence; Notefiles with fields, types, units, and normal ranges; what healthy and offline look like. | `docs/data.md`, `docs/configuration.md` |
 | Data routing | Where events should go after Notehub, if anywhere (default: nowhere yet). | `docs/data.md` |
@@ -116,7 +116,7 @@ Ask whether to generate firmware now. If yes:
 1. Call Blues Expert `firmware_entrypoint` and follow its guidance for the chosen platform.
 2. Read `docs/hardware.md`, `docs/data.md`, and `docs/configuration.md`. Write firmware in `firmware/` that matches them exactly: same pins, Notefiles, field names, env vars, and defaults.
 3. The firmware applies the Notecard configuration from `docs/configuration.md` at startup (`hub.set` with the ProductUID and sync settings, `card.voltage`, `card.location.mode`, `note.template`, and `card.dfu` when `docs/hardware.md` calls for Outboard Firmware Update), so that flashing the host is all it takes to set up a device. No Notecard CLI step is needed.
-4. The firmware reports its version at startup with `dfu.status` `version`, so Notehub shows which version each device runs. Use the object form, with `org` and `builder` set to who's building it from `docs/product.md`. Keep the version in one place in the source.
+4. The firmware reports its version at startup with the `version` argument of `hub.set`, so Notehub shows which version each device runs. (Use `hub.set` rather than `dfu.status`: Notecard for LoRa has no `dfu` requests.) Use the object form, with `org` and `builder` set to who's building it from `docs/product.md`. Keep the version in one place in the source.
 5. Validate every Notecard request with Blues Expert `api_validate`.
 6. Build the firmware. Fix errors until it compiles. If the toolchain isn't installed, give the user install commands and ask before running them.
 7. Update `firmware/README.md` with the real layout and build, flash, and monitor commands.

@@ -2,7 +2,9 @@
 # Checks a project generated from this template for leftovers, broken config, and firmware that doesn't build.
 set -u
 
-dir=${1:?usage: test/check.sh <generated-project-dir>}
+require_firmware=0
+if [ "${1:-}" = "--require-firmware" ]; then require_firmware=1; shift; fi
+dir=${1:?usage: test/check.sh [--require-firmware] <generated-project-dir>}
 failures=0
 fail() { echo "FAIL: $*"; failures=$((failures + 1)); }
 
@@ -36,16 +38,20 @@ if [ -f "$dir/SETUP.md" ]; then
 fi
 
 sketch=$(find "$dir/firmware" -name '*.ino' -not -path '*/build/*' 2>/dev/null | head -1)
-if [ -n "$sketch" ]; then
-  fqbn=$(grep -oE '[A-Za-z0-9_-]+:[A-Za-z0-9_-]+:[A-Za-z0-9_-]+(:[A-Za-z0-9_=,-]+)?' "$dir/firmware/README.md" | head -1)
-  if ! command -v arduino-cli >/dev/null; then
-    echo "SKIP: arduino-cli isn't installed, so the firmware wasn't built"
-  elif [ -z "$fqbn" ]; then
-    fail "firmware/README.md doesn't name an FQBN"
+fqbn=$(grep -oE '[A-Za-z0-9_-]+:[A-Za-z0-9_-]+:[A-Za-z0-9_-]+(:[A-Za-z0-9_=,-]+)?' "$dir/firmware/README.md" 2>/dev/null | head -1)
+if [ -z "$sketch" ]; then
+  [ "$require_firmware" = 1 ] && fail "firmware/ has no Arduino sketch"
+elif ! command -v arduino-cli >/dev/null; then
+  if [ "$require_firmware" = 1 ]; then
+    fail "arduino-cli isn't installed, so the firmware can't be built"
   else
-    arduino-cli compile --fqbn "$fqbn" "$(dirname "$sketch")" >/dev/null 2>&1 \
-      || fail "firmware doesn't build with $fqbn (run arduino-cli compile to see why)"
+    echo "SKIP: arduino-cli isn't installed, so the firmware wasn't built"
   fi
+elif [ -z "$fqbn" ]; then
+  fail "firmware/README.md doesn't name an FQBN"
+else
+  arduino-cli compile --fqbn "$fqbn" "$(dirname "$sketch")" >/dev/null 2>&1 \
+    || fail "firmware doesn't build with $fqbn (run arduino-cli compile to see why)"
 fi
 
 if [ "$failures" -eq 0 ]; then echo "PASS: $dir"; else echo "$failures check(s) failed"; exit 1; fi

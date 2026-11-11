@@ -25,7 +25,7 @@ Each kit also includes a flexible dual cellular and GPS antenna. Kit contents ca
 | Notecard Cell+WiFi | `NOTE-MBGLW`, `NOTE-MBNAW`, `NOTE-WBGLWT`, `NOTE-WBNAW`, `NOTE-WBNAWT`, `NOTE-WBEXW`, `NOTE-WBEXWT` | Cellular and WiFi. |
 | Notecard Cellular | `NOTE-MBGLN`, `NOTE-MBNAN`, `NOTE-WBNAN`, `NOTE-WBEXN` | Cellular only. |
 | Notecard for Skylo | `NOTE-NBGLWX` | Cellular (LTE-M / NB-IoT), Skylo satellite (NTN), and WiFi in one module. |
-| Notecard for LoRa | | Requires a LoRaWAN gateway. No GPS (`fixed` location only) and no web requests. |
+| Notecard for LoRa | | Requires a LoRaWAN gateway. No GPS (`fixed` location only), web requests, or host firmware updates. |
 | Notecard XP | | Low-cost variant of the Notecard Cellular SKUs for volume orders. Needs Notecarrier XP to prototype. |
 | Starnote for Skylo | | Satellite add-on that gives a Notecard NTN fallback. Prototype on Notecarrier XS. |
 | Starnote for Iridium | | Satellite add-on that gives a Notecard Iridium fallback. Prototype on Notecarrier XI. |
@@ -89,9 +89,10 @@ Sleep strategy options: **always on (default for USB)**; host sleeps and wakes o
 | **None (default)** | `off` | Notehub still estimates an approximate location from cell towers or WiFi. |
 | Fixed installation | `fixed`, with `lat` and `lon` | The only mode on Notecard for LoRa. |
 | Occasional position | `periodic` | Takes a GPS fix at an interval, only if the device has moved. |
-| Live position | `continuous` | GPS stays on. High power. |
+| Tracker | `periodic`, plus `card.location.track` | Records each fix in `_track.qo`. Tracking works only in `periodic` mode. |
+| Live position | `continuous` | GPS stays on. High power. Can't record a track: use the Tracker row for that. |
 
-For a tracker, add `card.location.track` to record each fix in `_track.qo`. GPS needs a GPS antenna: the kits include one, and Notecarrier A has one onboard.
+GPS needs a GPS antenna: the kits include one, and Notecarrier A has one onboard.
 
 ## Host firmware updates
 
@@ -100,6 +101,8 @@ For a tracker, add `card.location.track` to record each fix in `_track.qo`. GPS 
 | **Notecard Outboard Firmware Update (default when the carrier is pre-wired)** | The Notecard downloads host firmware from Notehub and flashes the host through its ROM bootloader, with no help from the host firmware. | An STM32 or ESP32 host. Notecarrier CX and Notecarrier F are pre-wired. On other boards, wire the Notecard's `ALT_DFU` (or `AUX`) pins to the host's `BOOT`, `RESET`, and UART pins. Enabled with `card.dfu`. |
 | In-application programming (IAP) | The host firmware downloads the update from the Notecard with `dfu.get` and flashes itself. | Update code in the host firmware. No extra wiring. |
 | None | Update over USB or a debugger only. | |
+
+Notecard for LoRa supports neither Outboard Firmware Update nor IAP, so it's always "None".
 
 The `card.dfu` arguments depend on the carrier and its version (Notecarrier CX and Notecarrier F v1.5 use `"mode":"altdfu"`), so look them up. Reference: https://dev.blues.io/notehub/host-firmware-updates/notecard-outboard-firmware-update/
 

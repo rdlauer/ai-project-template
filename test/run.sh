@@ -6,6 +6,7 @@ set -euo pipefail
 repo=$(cd "$(dirname "$0")/.." && pwd)
 out=${1:-$(mktemp -d)}
 mkdir -p "$out"
+out=$(cd "$out" && pwd)
 echo "Generating into $out"
 
 # Notehub MCP needs a browser sign-in, so the test connects only Blues Expert.
@@ -18,4 +19,5 @@ mcp='{"mcpServers":{"blues-expert":{"type":"http","url":"https://mcp.blues.io/ex
   --strict-mcp-config --mcp-config "$mcp" \
   > "$out.log")
 
-"$repo/test/check.sh" "$out"
+# The persona asks for firmware, so a run that skips it fails.
+"$repo/test/check.sh" --require-firmware "$out"

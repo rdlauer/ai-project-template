@@ -16,10 +16,10 @@ The firmware sends these settings to the Notecard at startup, so flashing the ho
 | Inbound interval | {{default: 1440}} min | `hub.set` `inbound` |
 | Voltage mode | `{{e.g. lipo}}` | `card.voltage` `mode` |
 | Location mode | `{{default: off}}` | `card.location.mode` `mode` |
-| Location tracking | {{off / on, writing _track.qo}} | `card.location.track` |
+| Location tracking | {{off / on, writing _track.qo (requires periodic location mode)}} | `card.location.track` |
 | Note templates | {{e.g. "sensors.qo"}} | `note.template` |
 | Outboard Firmware Update | {{e.g. "stm32", mode altdfu}} | `card.dfu` |
-| Host firmware version | Reported on every boot from the version in the firmware source | `dfu.status` `version` |
+| Host firmware version | Reported on every boot from the version in the firmware source | `hub.set` `version` |
 
 ## 2. Notehub environment variables
 

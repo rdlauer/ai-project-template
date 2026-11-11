@@ -57,7 +57,7 @@ Cross-reference them. For example, when debugging "device X stopped reporting," 
 - Prefer Notecard features over hand-rolled ones: note templates, `env.get` for remote configuration, `card.attn` / `card.voltage` for power, `hub.sync` only when necessary.
 - Read tunable values from Notehub environment variables, with in-code defaults that match `docs/configuration.md`.
 - The firmware applies the Notecard configuration in `docs/configuration.md` at startup (`hub.set`, `card.voltage`, `card.location.mode`, note templates, `card.dfu`, ...). Flashing the host is all it takes to set up a device, so keep the firmware and that doc in sync.
-- The firmware reports its version to Notehub on every boot with `dfu.status` `version`. Bump the version in the source with every release, and in `firmware/README.md`.
+- The firmware reports its version to Notehub on every boot with the `version` argument of `hub.set`, which works on every Notecard (Notecard for LoRa has no `dfu` requests). Bump the version in the source with every release, and in `firmware/README.md`.
 - Before saying a firmware change works, build it. If a device is connected, flash it, check serial output, and confirm the expected events through Notehub MCP.
 
 ## Dashboard
