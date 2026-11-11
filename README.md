@@ -11,9 +11,9 @@ Agents: Follow the steps in [`GENERATOR.md`](./GENERATOR.md).
 ## What the agent does
 
 1. **Scaffold:** copies [`template/`](./template/) into your folder and adds MCP config for Blues Expert and Notehub MCP.
-2. **Interview:** asks about your product, Notecard, Notecarrier, host MCU, components, wiring, power, firmware platform, Notefiles, and configuration. Where it can, it looks up answers with Blues Expert instead of asking you.
+2. **Interview:** asks about your product, then your hardware (if you have a Blues kit, that covers most of it): Notecard, Notecarrier, host MCU, components, firmware updates, wiring, power, and location. Then your firmware platform, Notefiles, data routing, and configuration. Where it can, it looks up answers in the Blues docs instead of asking you.
 3. **Document:** writes your answers into `docs/`.
-4. **Notehub project:** helps you create or pick the Notehub project the device will report to.
+4. **Notehub project:** helps you create or pick the Notehub project the device will report to, and set up routes.
 5. **Firmware:** generates host firmware in `firmware/` using Blues Expert, builds it, and flashes it. The firmware configures the Notecard itself, so no extra setup tools are needed.
 6. **Notehub IQ:** onboards your project with Notehub MCP and creates datasets so you can ask questions about your device data.
 7. **Dashboard (optional):** generates a web dashboard in `dashboard/`.
@@ -39,3 +39,7 @@ my-project/
 - An AI coding agent that supports MCP servers.
 - Blues hardware: a Notecard, a Notecarrier (or custom carrier), and a host MCU.
 - A [Notehub](https://notehub.io) account.
+
+## License
+
+[MIT](./LICENSE)

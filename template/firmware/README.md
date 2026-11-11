@@ -1,12 +1,14 @@
 # Firmware
 
-<!-- Generator: fill from the "Firmware" interview topic. After generating firmware (step 5), replace the placeholders with the real layout and commands. -->
+<!-- Generator: fill from the "Firmware" interview topic. After the Firmware step generates firmware, replace the placeholders with the real layout and commands. -->
 
 Host firmware for {{PROJECT_NAME}}.
 
-- **Platform:** {{Arduino with note-arduino}}
-- **Build tool:** {{Arduino CLI}}
-- **Board:** {{e.g. Blues Swan}} (`{{FQBN or PlatformIO env, e.g. STMicroelectronics:stm32:Blues:pnum=SWAN_R5}}`)
+- **Platform:** {{default: Arduino with note-arduino}}
+- **Build tool:** {{default: Arduino CLI}}
+- **Board:** {{e.g. Blues Cygnet}} (`{{FQBN or PlatformIO env, e.g. STMicroelectronics:stm32:Blues:pnum=CYGNET}}`)
+- **Version:** {{default: 1.0.0}}, reported to Notehub on every boot. Bump it with every release.
+- **Field updates:** {{Notecard Outboard Firmware Update / IAP / none}} (see [hardware](../docs/hardware.md#host-firmware-updates))
 
 ## What it does
 

@@ -6,6 +6,8 @@
 
 {{ONE_SENTENCE_SUMMARY}}
 
+**Built by:** {{organization, or the builder's name}} (used in the firmware's version info)
+
 ## Problem and audience
 
 {{What problem does this solve, and for whom?}}
